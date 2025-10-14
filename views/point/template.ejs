@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/point/style.css">
+</head>
+
+<body>
+    <main>
+        <%- include("../backdrop/common"); %>
+        <section class="content">
+            <h3 class="tag">
+                #<%- tag %>
+            </h3>
+            <h1>
+                <%- title %>
+                <small>
+                    <%- subtitle %>
+                </small>
+            </h1>
+            <ul>
+                <% points.forEach((point)=> { %>
+                    <li>
+                        <div class="icon">
+                            <img src="<%- 'https://api.iconify.design/streamline-ultimate-color/' + point.point_icon + '.svg' %>"
+                                alt="Icon">
+                        </div>
+                        <div class="point">
+                            <h3>
+                                <%- point.point_title %>
+                            </h3>
+                            <p>
+                                <%- point.point_description %>
+                            </p>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        </section>
+    </main>
+</body>
+
+</html>

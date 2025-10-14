@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/cover/style.css">
+</head>
+
+<body>
+    <main>
+        <%- include("../backdrop/common"); %>
+        <section class="content">
+            <div class="cover">
+                <img src="<%- cover %>">
+                <img src="<%- cover %>">
+                <span></span>
+            </div>
+            <h3 class="tag">
+                #<%- tag %>
+            </h3>
+            <h1>
+                <%- title %>
+                    <small>
+                        <%- subtitle %>
+                    </small>
+            </h1>
+        </section>
+    </main>
+</body>
+
+</html>
