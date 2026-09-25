@@ -1,0 +1,301 @@
+{
+  "info": {
+    "_postman_id": "f79eb827-16f5-46b0-a5cd-11d89aee02a4",
+    "name": "xxdev.id Automation",
+    "description": "Requests for previewing HTML templates and rendering them as PNG images. Start the service before running the collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "coverUrl",
+      "value": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Preview HTML",
+      "description": "Render template payloads as HTML for browser preview.",
+      "item": [
+        {
+          "name": "Preview Cover",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"cover\",\n  \"tag\": \"automation\",\n  \"title\": \"Build a Repeatable Content Workflow\",\n  \"subtitle\": \"Turn one idea into a polished content series\",\n  \"cover\": \"{{coverUrl}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/",
+            "description": "Returns the cover template as HTML. Required fields: type, tag, title, subtitle, and cover."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is HTML\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Preview Point",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"point\",\n  \"tag\": \"productivity\",\n  \"title\": \"Three Ways to Improve Your Workflow\",\n  \"subtitle\": \"Simple changes that compound over time\",\n  \"points\": [\n    {\n      \"point_icon\": \"task-list-approve\",\n      \"point_title\": \"Choose one outcome\",\n      \"point_description\": \"Define the result before selecting tools or tactics.\"\n    },\n    {\n      \"point_icon\": \"time-clock-circle\",\n      \"point_title\": \"Protect focused time\",\n      \"point_description\": \"Schedule uninterrupted blocks for the work that matters.\"\n    },\n    {\n      \"point_icon\": \"analytics-graph-bar\",\n      \"point_title\": \"Review the result\",\n      \"point_description\": \"Use evidence from each cycle to improve the next one.\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/",
+            "description": "Returns the point-list template as HTML. Each points entry requires point_icon, point_title, and point_description. Icon names are resolved through the Streamline Ultimate Color Iconify collection."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is HTML\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Preview Close",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"close\",\n  \"cover\": \"{{coverUrl}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/",
+            "description": "Returns the closing template as HTML. Required fields: type and cover."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is HTML\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Render PNG",
+      "description": "Render template payloads as full-page PNG screenshots. These requests launch Puppeteer and may take longer than HTML previews.",
+      "item": [
+        {
+          "name": "Render Cover PNG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"cover\",\n  \"tag\": \"automation\",\n  \"title\": \"Build a Repeatable Content Workflow\",\n  \"subtitle\": \"Turn one idea into a polished content series\",\n  \"cover\": \"{{coverUrl}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/render",
+            "description": "Returns a PNG screenshot of the cover template. Use Postman's Save Response to File action to persist the image."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is PNG\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/png\");",
+                  "});",
+                  "pm.test(\"Image is not empty\", function () {",
+                  "  pm.expect(pm.response.size().body).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Render Point PNG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"point\",\n  \"tag\": \"productivity\",\n  \"title\": \"Three Ways to Improve Your Workflow\",\n  \"subtitle\": \"Simple changes that compound over time\",\n  \"points\": [\n    {\n      \"point_icon\": \"task-list-approve\",\n      \"point_title\": \"Choose one outcome\",\n      \"point_description\": \"Define the result before selecting tools or tactics.\"\n    },\n    {\n      \"point_icon\": \"time-clock-circle\",\n      \"point_title\": \"Protect focused time\",\n      \"point_description\": \"Schedule uninterrupted blocks for the work that matters.\"\n    },\n    {\n      \"point_icon\": \"analytics-graph-bar\",\n      \"point_title\": \"Review the result\",\n      \"point_description\": \"Use evidence from each cycle to improve the next one.\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/render",
+            "description": "Returns a PNG screenshot of the point-list template. Use Postman's Save Response to File action to persist the image."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is PNG\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/png\");",
+                  "});",
+                  "pm.test(\"Image is not empty\", function () {",
+                  "  pm.expect(pm.response.size().body).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Render Close PNG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "image/png"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"close\",\n  \"cover\": \"{{coverUrl}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/render",
+            "description": "Returns a PNG screenshot of the closing template. Use Postman's Save Response to File action to persist the image."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is PNG\", function () {",
+                  "  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/png\");",
+                  "});",
+                  "pm.test(\"Image is not empty\", function () {",
+                  "  pm.expect(pm.response.size().body).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
